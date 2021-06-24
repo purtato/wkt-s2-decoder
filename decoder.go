@@ -31,7 +31,7 @@ func GeomString(g geometry.Type) string {
 func asS2LatLngs(points []*geometry.Point) []s2.LatLng {
     xs := make([]s2.LatLng, len(points))
     for i, p := range points {
-        xs[i] = s2.LatLngFromDegrees(p.X, p.Y)
+        xs[i] = s2.LatLngFromDegrees(p.Y, p.X)
     }
     return xs
 }
@@ -39,7 +39,7 @@ func asS2LatLngs(points []*geometry.Point) []s2.LatLng {
 func asS2Points(points []*geometry.Point) []s2.Point {
     xs := make([]s2.Point, len(points))
     for i, p := range points {
-        xs[i] = s2.PointFromLatLng(s2.LatLngFromDegrees(p.X, p.Y))
+        xs[i] = s2.PointFromLatLng(s2.LatLngFromDegrees(p.Y, p.X))
     }
     return xs
 }
