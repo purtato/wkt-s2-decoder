@@ -9,7 +9,7 @@ import (
     "io"
 )
 
-type decoder struct {
+type Decoder struct {
     parser *parser.Parser
 }
 
@@ -52,7 +52,7 @@ func asS2Polygon(lines []*geometry.LineString) *s2.Polygon {
     return s2.PolygonFromLoops(loops)
 }
 
-func (d *decoder) ParsePoint(r io.Reader) (s2.Point, error) {
+func (d *Decoder) ParsePoint(r io.Reader) (s2.Point, error) {
     g, err := d.ParseWKT(r)
     if err != nil {
         return s2.Point{}, err
@@ -63,7 +63,7 @@ func (d *decoder) ParsePoint(r io.Reader) (s2.Point, error) {
     return s2.Point{}, errors.New("cast error")
 }
 
-func (d *decoder) ParseLinestring(r io.Reader) (*s2.Polyline, error) {
+func (d *Decoder) ParseLinestring(r io.Reader) (*s2.Polyline, error) {
     g, err := d.ParseWKT(r)
     if err != nil {
         return nil, err
@@ -74,7 +74,7 @@ func (d *decoder) ParseLinestring(r io.Reader) (*s2.Polyline, error) {
     return nil, errors.New("cast error")
 }
 
-func (d *decoder) ParsePolygon(r io.Reader) (*s2.Polygon, error) {
+func (d *Decoder) ParsePolygon(r io.Reader) (*s2.Polygon, error) {
     g, err := d.ParseWKT(r)
     if err != nil {
         return nil, err
@@ -85,7 +85,7 @@ func (d *decoder) ParsePolygon(r io.Reader) (*s2.Polygon, error) {
     return nil, errors.New("cast error")
 }
 
-func (d *decoder) ParseMultiPoint(r io.Reader) ([]s2.Point, error) {
+func (d *Decoder) ParseMultiPoint(r io.Reader) ([]s2.Point, error) {
     g, err := d.ParseWKT(r)
     if err != nil {
         return nil, err
@@ -96,7 +96,7 @@ func (d *decoder) ParseMultiPoint(r io.Reader) ([]s2.Point, error) {
     return nil, errors.New("cast error")
 }
 
-func (d *decoder) ParseMultiLinestring(r io.Reader) ([]s2.Polyline, error) {
+func (d *Decoder) ParseMultiLinestring(r io.Reader) ([]s2.Polyline, error) {
     g, err := d.ParseWKT(r)
     if err != nil {
         return nil, err
@@ -107,7 +107,7 @@ func (d *decoder) ParseMultiLinestring(r io.Reader) ([]s2.Polyline, error) {
     return nil, errors.New("cast error")
 }
 
-func (d *decoder) ParseMultiPolygon(r io.Reader) ([]s2.Polygon, error) {
+func (d *Decoder) ParseMultiPolygon(r io.Reader) ([]s2.Polygon, error) {
     g, err := d.ParseWKT(r)
     if err != nil {
         return nil, err
@@ -118,7 +118,7 @@ func (d *decoder) ParseMultiPolygon(r io.Reader) ([]s2.Polygon, error) {
     return nil, errors.New("cast error")
 }
 
-func (d *decoder) ParseWKT(r io.Reader) (interface{}, error) {
+func (d *Decoder) ParseWKT(r io.Reader) (interface{}, error) {
     g, err := d.parser.ParseWKT(r)
     if err != nil {
         return nil, err
@@ -149,8 +149,8 @@ func (d *decoder) ParseWKT(r io.Reader) (interface{}, error) {
     }
 }
 
-func New() decoder {
-    return decoder{
+func New() Decoder {
+    return Decoder{
         parser: parser.New(),
     }
 }
