@@ -119,6 +119,9 @@ func (d *Decoder) ParseMultiPolygon(r io.Reader) ([]s2.Polygon, error) {
 }
 
 func (d *Decoder) ParseWKT(r io.Reader) (interface{}, error) {
+    if r == nil {
+        return nil, fmt.Errorf("cannot parse nil as wkt")
+    }
     g, err := d.parser.ParseWKT(r)
     if err != nil {
         return nil, err

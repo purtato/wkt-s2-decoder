@@ -24,3 +24,19 @@ func TestLinestring(t *testing.T) {
 		t.Errorf("Incorrect first point, expected (30, 10), but found (%f, %f)", first.Lng.Degrees(), first.Lat.Degrees())
 	}
 }
+
+func TestNil(t *testing.T) {
+	d := New()
+	_, err := d.ParseLinestring(nil)
+	if err == nil {
+		t.Errorf("Missing err for nil input")
+	}
+}
+
+func TestEmpty(t *testing.T) {
+	d := New()
+	_, err := d.ParseLinestring(bytes.NewReader([]byte("")))
+	if err == nil {
+		t.Errorf("Missing err for empty input")
+	}
+}
